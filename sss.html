@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıkça Sorulan Sorular - ReWear</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #ff8a80 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="20" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 25s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            100% { transform: translateX(-60px) translateY(-60px) rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .breadcrumb-nav a {
+            color: #6c757d;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #ff6b6b;
+        }
+
+        .breadcrumb-nav span {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .faq-title {
+            font-size: 2.8rem;
+            color: #2c5530;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .faq-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a52);
+            border-radius: 2px;
+        }
+
+        .faq-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* FAQ Grid */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* FAQ Kategorileri */
+        .faq-category {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faq-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f1f3f4;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .general-icon { background: linear-gradient(135deg, #4CAF50, #8BC34A); }
+        .technical-icon { background: linear-gradient(135deg, #2196F3, #21CBF3); }
+        .account-icon { background: linear-gradient(135deg, #ff6b6b, #ee5a52); }
+        .pricing-icon { background: linear-gradient(135deg, #ffc107, #ff8c00); }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5530;
+        }
+
+        /* FAQ Öğeleri */
+        .faq-item {
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2c5530;
+            position: relative;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            color: #666;
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            max-height: 300px;
+            padding: 0 25px 25px;
+        }
+
+        /* İletişim Bölümü */
+        .contact-section {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: white;
+            color: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        .contact-btn span {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Canlı Destek Modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .chat-modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            animation: slideInUp 0.3s ease;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-title::before {
+            content: '💬';
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-chat:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .chat-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .chat-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .chat-option {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #2c5530;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-option:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .chat-option span {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .faq-category {
+                padding: 30px 20px;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-btn {
+                width: 250px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-badge">❓ Size Yardımcı Olmaya Hazırız</div>
+            <h1 class="hero-title">Sıkça Sorulan Sorular</h1>
+            <p class="hero-subtitle">
+                ReWear hakkında merak ettiklerinizin yanıtlarını buradan bulabilirsiniz. Aradığınızı bulamazsanız bizimle iletişime geçin!
+            </p>
+        </div>
+    </section>
+
+    <!-- Canlı Destek Modal -->
+    <div id="chatModal" class="chat-modal">
+        <div class="chat-modal-content">
+            <div class="chat-header">
+                <div class="chat-title">Canlı Destek</div>
+                <button class="close-chat" onclick="closeChatModal()">&times;</button>
+            </div>
+            <div class="chat-body">
+                <h3 style="margin-bottom: 15px; color: #2c5530;">Size nasıl yardımcı olabiliriz?</h3>
+                <p style="color: #666; margin-bottom: 25px;">
+                    Destek ekibimizle iletişime geçmek için aşağıdaki seçeneklerden birini kullanabilirsiniz:
+                </p>
+                
+                <div class="chat-options">
+                    <a href="https://wa.me/905554443322?text=Merhaba! ReWear hakkında bilgi almak istiyorum." 
+                       target="_blank" 
+                       class="chat-option">
+                        <span>📱</span>
+                        WhatsApp ile İletişim
+                    </a>
+                    
+                    <a href="https://t.me/rewear_destek" 
+                       target="_blank" 
+                       class="chat-option">
+                        <span>✈️</span>
+                        Telegram Desteği
+                    </a>
+                    
+                    <a href="mailto:destek@rewear.com?subject=Acil Destek Talebi&body=Merhaba,%0D%0A%0D%0AHızlı destek için bu e-postayı gönderiyorum.%0D%0A%0D%0ASorunum:%0D%0A" 
+                       class="chat-option">
+                        <span>⚡</span>
+                        Hızlı E-posta
+                    </a>
+                    
+                    <button onclick="openCallbackForm()" class="chat-option" style="border: none; width: 100%;">
+                        <span>📞</span>
+                        Beni Arayın
+                    </button>
+                </div>
+                
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <p style="font-size: 0.9rem; color: #666;">
+                        💡 <strong>Çalışma Saatleri:</strong> Pazartesi - Cuma 09:00-18:00<br>
+                        🕐 <strong>Ortalama Yanıt Süresi:</strong> 2 saat içinde
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geri Arama Formu Modal -->
+    <div id="callbackModal" class="chat-modal">
+        <div class="chat-modal-content">
+            <div class="chat-header">
+                <div class="chat-title">Geri Arama Talebi</div>
+                <button class="close-chat" onclick="closeCallbackModal()">&times;</button>
+            </div>
+            <div class="chat-body">
+                <form id="callbackForm" style="text-align: left;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #2c5530; font-weight: 600;">
+                            Ad Soyad *
+                        </label>
+                        <input type="text" 
+                               id="fullName"
+                               required 
+                               style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #2c5530; font-weight: 600;">
+                            Telefon Numarası *
+                        </label>
+                        <input type="tel" 
+                               id="phoneNumber"
+                               required 
+                               placeholder="0555 123 45 67"
+                               style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #2c5530; font-weight: 600;">
+                            Konuşma Zamanı
+                        </label>
+                        <select id="callTime" 
+                                style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem;">
+                            <option value="asap">En Kısa Zamanda</option>
+                            <option value="morning">Sabah (09:00-12:00)</option>
+                            <option value="afternoon">Öğleden Sonra (13:00-17:00)</option>
+                            <option value="evening">Akşam (17:00-18:00)</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 8px; color: #2c5530; font-weight: 600;">
+                            Konu (İsteğe Bağlı)
+                        </label>
+                        <textarea id="subject" 
+                                  rows="3" 
+                                  placeholder="Hangi konuda yardım almak istiyorsunuz?"
+                                  style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <button type="submit" 
+                            style="width: 100%; padding: 15px; background: linear-gradient(135deg, #4CAF50, #8BC34A); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        📞 Geri Arama Talebini Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-nav">
+                <a href="index.html">Ana Sayfa</a> > 
+                <span>Sıkça Sorulan Sorular</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-header">
+                <h2 class="faq-title">Sıkça Sorulan Sorular</h2>
+                <p class="faq-subtitle">
+                    En çok merak edilen sorulardan derlediklerimiz. Kategorilere göre düzenlenmiş yanıtlarımıza göz atın.
+                </p>
+            </div>
+
+            <div class="faq-grid">
+                <!-- Genel Sorular -->
+                <div class="faq-category">
+                    <div class="category-header">
+                        <div class="category-icon general-icon">🌍</div>
+                        <h3 class="category-title">Genel Sorular</h3>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">ReWear nedir ve nasıl çalışır?</button>
+                        <div class="faq-answer">
+                            ReWear, tekstil atıklarının geri dönüştürülebilmesi için toplama noktalarını harita üzerinde gösteren bir platformdur. Kullanıcılar mevcut noktaları görebilir, yeni noktalar ekleyebilir ve çevre dostu bir toplulukla etkileşime geçebilir.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Hangi tekstil ürünleri geri dönüştürülebilir?</button>
+                        <div class="faq-answer">
+                            Pamuklu giysiler, kot pantolonlar, tişörtler, çoraplar, ev tekstilleri (perdeler, çarşaflar), ayakkabılar ve çantalar gibi birçok tekstil ürünü geri dönüştürülebilir. Tamamen yırtık olmayan ve temiz olan ürünler tercih edilir.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Platform tamamen ücretsiz mi?</button>
+                        <div class="faq-answer">
+                            Temel özellikler tamamen ücretsizdir. Harita görüntüleme, nokta ekleme ve topluluk forumuna katılım hiçbir ücret gerektirmez. Premium özellikler için farklı planlarımız bulunmaktadır.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teknik Sorular -->
+                <div class="faq-category">
+                    <div class="category-header">
+                        <div class="category-icon technical-icon">⚙️</div>
+                        <h3 class="category-title">Teknik Sorular</h3>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Nasıl nokta ekleyebilirim?</button>
+                        <div class="faq-answer">
+                            Harita sayfasında "Nokta Ekle" butonuna tıklayın. Konum bilgilerini girin, fotoğraf ekleyin ve açıklama yazın. Eklediğiniz nokta incelendikten sonra haritada görünür hale gelir.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Mobil cihazlarda çalışır mı?</button>
+                        <div class="faq-answer">
+                            Evet! ReWear tamamen responsive tasarımla geliştirilmiştir. Hem mobil hem tablet hem de masaüstü cihazlarda sorunsuz çalışır. GPS özelliği sayesinde konumunuzu otomatik tespit edebilir.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">İnternet bağlantısı olmadan kullanılabilir mi?</button>
+                        <div class="faq-answer">
+                            Temel harita görüntüleme işlemleri çevrimdışı çalışabilir ancak nokta ekleme, güncelleme ve topluluk özellikleri için internet bağlantısı gereklidir.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hesap ve Güvenlik -->
+                <div class="faq-category">
+                    <div class="category-header">
+                        <div class="category-icon account-icon">👤</div>
+                        <h3 class="category-title">Hesap ve Güvenlik</h3>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Nasıl doğrulanmış kullanıcı olurum?</button>
+                        <div class="faq-answer">
+                            Hesap ayarlarından kimlik belgenizi yükleyin. Doğrulama süreci 24-48 saat sürer. Onaylandıktan sonra kullanıcı adınızın yanında mavi tik (✅) görünür ve öncelikli destek alırsınız.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Kişisel verilerim güvende mi?</button>
+                        <div class="faq-answer">
+                            Kişisel verileriniz KVKK uyumlu şekilde korunur. Konum bilgileriniz şifrelenerek saklanır ve üçüncü kişilerle paylaşılmaz. İstediğiniz zaman hesabınızı silebilir ve verilerinizi kaldırabilirsiniz.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Şifremi unuttum, ne yapmalıyım?</button>
+                        <div class="faq-answer">
+                            Giriş sayfasında "Şifremi Unuttum" linkine tıklayın. E-posta adresinizi girin, size şifre sıfırlama linki gönderilecektir. Link 24 saat geçerlidir.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fiyatlandırma -->
+                <div class="faq-category">
+                    <div class="category-header">
+                        <div class="category-icon pricing-icon">💎</div>
+                        <h3 class="category-title">Fiyatlandırma</h3>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">VIP üyelik ne sağlar?</button>
+                        <div class="faq-answer">
+                            VIP üyeler etkinlik düzenleyebilir, özel rozetlere sahip olur, öncelikli müşteri desteği alır ve gelişmiş analitiklere erişir. Ayrıca admin panelinden istatistiklerinizi detaylı görebilirsiniz.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Üyeliğimi iptal edebilir miyim?</button>
+                        <div class="faq-answer">
+                            Evet, VIP üyeliğinizi istediğiniz zaman iptal edebilirsiniz. İptal sonrası mevcut dönem sonuna kadar özellikleriniz aktif kalır. Doğrulanmış kullanıcı statüsü kalıcıdır ve iptal edilemez.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Hangi ödeme yöntemleri kabul ediliyor?</button>
+                        <div class="faq-answer">
+                            Kredi kartı, banka kartı, havale/EFT ve dijital cüzdanlar (PayPal, Apple Pay, Google Pay) kabul edilir. Tüm ödemeler SSL şifrelemesi ile güvence altındadır.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim Bölümü -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="contact-title">Cevap Bulamadınız mı?</h2>
+                <p class="contact-text">
+                    Aradığınız sorunun cevabı burada yoksa, destek ekibimizle iletişime geçin. 
+                    24 saat içinde size geri dönüş yapacağız.
+                </p>
+                <div class="contact-buttons">
+                    <a href="mailto:info@rewear.com?subject=ReWear Destek Talebi&body=Merhaba ReWear Ekibi,%0D%0A%0D%0ASorum/Sorunum:%0D%0A%0D%0A%0D%0ATeşekkürler." class="contact-btn">
+                        <span>📧</span>
+                        E-posta Gönder
+                    </a>
+                    <button id="liveChatBtn" class="contact-btn">
+                        <span>💬</span>
+                        Canlı Destek
+                    </button>
+                    <a href="index.html" class="contact-btn">
+                        <span>🏠</span>
+                        Ana Sayfaya Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Açma/Kapatma
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Tüm açık soruları kapat
+                    faqQuestions.forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+
+            // Canlı destek butonu click eventi
+            document.getElementById('liveChatBtn').addEventListener('click', function() {
+                document.getElementById('chatModal').style.display = 'block';
+            });
+
+            // Form submit eventi
+            document.getElementById('callbackForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    name: document.getElementById('fullName').value,
+                    phone: document.getElementById('phoneNumber').value,
+                    time: document.getElementById('callTime').value,
+                    subject: document.getElementById('subject').value
+                };
+                
+                // E-posta ile form bilgilerini gönder
+                const emailBody = `
+Geri Arama Talebi Detayları:
+━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 Ad Soyad: ${formData.name}
+📞 Telefon: ${formData.phone}
+🕐 Tercih Edilen Zaman: ${getTimeText(formData.time)}
+📝 Konu: ${formData.subject || 'Belirtilmemiş'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━
+Bu talep ReWear SSS sayfasından gönderildi.
+                `;
+                
+                const mailtoLink = `mailto:destek@rewear.com?subject=GERİ ARAMA TALEBİ - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+                window.location.href = mailtoLink;
+                
+                // Modal kapat ve başarı mesajı göster
+                closeCallbackModal();
+                showSuccessMessage();
+            });
+        });
+
+        // Modal fonksiyonları
+        function closeChatModal() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        function closeCallbackModal() {
+            document.getElementById('callbackModal').style.display = 'none';
+        }
+
+        function openCallbackForm() {
+            closeChatModal();
+            document.getElementById('callbackModal').style.display = 'block';
+        }
+
+        function getTimeText(value) {
+            const times = {
+                'asap': 'En Kısa Zamanda',
+                'morning': 'Sabah (09:00-12:00)',
+                'afternoon': 'Öğleden Sonra (13:00-17:00)',
+                'evening': 'Akşam (17:00-18:00)'
+            };
+            return times[value] || value;
+        }
+
+        function showSuccessMessage() {
+            // Başarı mesajı göster
+            const successDiv = document.createElement('div');
+            successDiv.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #4CAF50, #8BC34A); color: white; padding: 20px 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1001; animation: slideInRight 0.5s ease;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="font-size: 1.5rem; margin-right: 10px;">✅</span>
+                        <div>
+                            <strong>Talebiniz Alındı!</strong><br>
+                            <small>En kısa sürede sizi arayacağız.</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(successDiv);
+            
+            // 5 saniye sonra kaldır
+            setTimeout(() => {
+                successDiv.remove();
+            }, 5000);
+        }
+
+        // Modal dışına tıklanınca kapat
+        window.onclick = function(event) {
+            const chatModal = document.getElementById('chatModal');
+            const callbackModal = document.getElementById('callbackModal');
+            
+            if (event.target === chatModal) {
+                chatModal.style.display = 'none';
+            }
+            if (event.target === callbackModal) {
+                callbackModal.style.display = 'none';
+            }
+        }
+                    
+                    // Eğer tıklanan soru kapalıysa aç
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
+                });
+            });
+
+            // Kategori animasyonları
+            const categories = document.querySelectorAll('.faq-category');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            categories.forEach((category, index) => {
+                category.style.opacity = '0';
+                category.style.transform = 'translateY(30px)';
+                category.style.transition = `all 0.6s ease ${index * 0.2}s`;
+                observer.observe(category);
+            });
+    </script>
+</body>
+</html>

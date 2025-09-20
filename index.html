@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ReWear - Harita</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="brand">ReWear</div>
+    <div class="menu auth-links">
+      <a href="about.html">Hakkımızda</a>
+      <a href="register.html">Kayıt</a>
+      <button id="logoutBtn">Çıkış</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="map"></div>
+
+    <div class="map-controls" style="display:flex;align-items:center">
+      <button class="map-button" onclick="addPoint()">➕ Nokta Ekle</button>
+      <select id="filterSelect" class="filter-select" onchange="applyFilter()">
+        <option value="all">Tümü</option>
+        <option value="kıyafet">Kıyafet</option>
+        <option value="ayakkabı">Ayakkabı</option>
+        <option value="aksesuar">Aksesuar</option>
+      </select>
+    </div>
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
